@@ -2,9 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 
-// Shell kosong - tempat nanti fitur-fitur sungguhan ditambahkan:
-// baca koleksi, kartu anggota digital, berita, chatbot (member);
-// scan ISBN, kirim notifikasi (staff).
 export default function Dashboard() {
   const { session, logout } = useAuth();
   const navigate = useNavigate();
@@ -30,9 +27,16 @@ export default function Dashboard() {
           Keluar
         </button>
       </header>
-      <p className="placeholder-note">
-        Fitur {session.role === 'staff' ? 'staff' : 'anggota'} belum ditambahkan di skeleton ini.
-      </p>
+
+      {session.role === 'staff' && (
+        <button className="button" type="button" onClick={() => navigate('/dashboard/scan-isbn')}>
+          Scan ISBN
+        </button>
+      )}
+
+      {session.role !== 'staff' && (
+        <p className="placeholder-note">Fitur anggota belum ditambahkan di skeleton ini.</p>
+      )}
     </div>
   );
 }
